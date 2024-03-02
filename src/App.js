@@ -10,7 +10,9 @@ import { VideoProvider } from "./context/video";
 
 function App() {
   const GlobalStyle = createGlobalStyle`
- 
+  a {
+    text-decoration: none;
+  }
 `;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +35,7 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/repo/:username/:project" element={<VideoDetail />} />
+          <Route path="/video/:videoId" element={<VideoDetail />} />
         </Routes>
       </Router>
     </VideoProvider>

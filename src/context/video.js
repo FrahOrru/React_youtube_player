@@ -28,6 +28,22 @@ export const VideoProvider = ({ children }) => {
     }
   };
 
+  const searchVideoWithoutText = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://youtube.thorsteinsson.is/api/search`
+      );
+      setLoading(false);
+      setError(null);
+      setSearchResults(response.data);
+      console.log(response.data);
+    } catch (error) {
+      setLoading(false);
+      setError("Error searching videos");
+    }
+  };
+
   const getVideoDetails = async (videoId) => {
     try {
       setLoading(true);
@@ -57,6 +73,7 @@ export const VideoProvider = ({ children }) => {
         searchVideos,
         getVideoDetails,
         getVideosResults,
+        searchVideoWithoutText,
       }}
     >
       {children}

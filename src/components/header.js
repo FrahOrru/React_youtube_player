@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { SearchBar } from "./search_bar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { UserProfileCircle } from "./user_profile_circle";
+import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.div`
   height: 56px;
@@ -24,7 +26,7 @@ const LogoImage = styled.img`
   width: 100%;
 `;
 
-export const UserProfileCircle = styled.div`
+export const UserProfileCircleS = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,19 +68,14 @@ export function Header({ onSearch }) {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <LogoImage src="./youtube.png" alt="icon" />
+        <Link to={"/"}>
+          <LogoImage src="./youtube.png" alt="icon" />
+        </Link>
       </LogoContainer>
       <SearchBar onChangeSearchText={handleSearch} />
       <IconsWrapper>
         <FontAwesomeIcon icon={faBell} />
-        <UserProfileCircle>
-          <ImageWrapper>
-            <ProfileImage
-              src="./user_placeholder.jpg"
-              alt="user pic placeholder"
-            />
-          </ImageWrapper>
-        </UserProfileCircle>
+        <UserProfileCircle />
       </IconsWrapper>
     </HeaderContainer>
   );

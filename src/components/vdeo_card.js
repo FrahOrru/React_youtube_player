@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ImageWrapper, ProfileImage, UserProfileCircle } from "./header";
+import { Link } from "react-router-dom";
+import { UserProfileCircle } from "./user_profile_circle";
 const CardContainer = styled.div`
   max-width: 400px;
   height: 100%;
@@ -28,10 +29,10 @@ const VideoTitle = styled.p`
   white-space: normal;
   margin: 0;
 `;
-const VideoChannelDetails = styled(VideoTitle)`
+export const VideoChannelDetails = styled(VideoTitle)`
   color: #606060;
   font-family: "Roboto", "Arial", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 `;
 const VideoChannelDetailsWithDot = styled(VideoChannelDetails)`
@@ -66,34 +67,29 @@ const DetailsTextContainer = styled.div`
 export function VideoCard({ video, onClick }) {
   return (
     <CardContainer>
-      <VideoImageContainer>
-        <VideoImage
-          src={video?.snippet?.thumbnails?.url}
-          alt="video thumbnails"
-        />
-      </VideoImageContainer>
-      <VideoDetailContainer>
-        <UserProfileCircle>
-          <ImageWrapper>
-            <ProfileImage
-              src="./user_placeholder.jpg"
-              alt="user pic placeholder"
-            />
-          </ImageWrapper>
-        </UserProfileCircle>
-        <DetailsTextContainer>
-          <VideoTitle>{video.title}</VideoTitle>
-          <VideoChannelDetails>{video.channelName}</VideoChannelDetails>
-          <FlexAlignedCenterStart>
-            <VideoChannelDetails>
-              {video.snippet.views} visualizzazioni
-            </VideoChannelDetails>
-            <VideoChannelDetailsWithDot>
-              {video.snippet.publishedAt}
-            </VideoChannelDetailsWithDot>
-          </FlexAlignedCenterStart>
-        </DetailsTextContainer>
-      </VideoDetailContainer>
+      <Link to={"/video/" + video.id.videoId}>
+        <VideoImageContainer>
+          <VideoImage
+            src={video?.snippet?.thumbnails?.url}
+            alt="video thumbnails"
+          />
+        </VideoImageContainer>
+        <VideoDetailContainer>
+          <UserProfileCircle></UserProfileCircle>
+          <DetailsTextContainer>
+            <VideoTitle>{video.title}</VideoTitle>
+            <VideoChannelDetails>{video.channelName}</VideoChannelDetails>
+            <FlexAlignedCenterStart>
+              <VideoChannelDetails>
+                {video.snippet.views} visualizzazioni
+              </VideoChannelDetails>
+              <VideoChannelDetailsWithDot>
+                {video.snippet.publishedAt}
+              </VideoChannelDetailsWithDot>
+            </FlexAlignedCenterStart>
+          </DetailsTextContainer>
+        </VideoDetailContainer>
+      </Link>
     </CardContainer>
   );
 }
