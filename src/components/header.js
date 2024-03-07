@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { SearchBar } from "./search_bar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faList } from "@fortawesome/free-solid-svg-icons";
 import { UserProfileCircle } from "./user_profile_circle";
 import { Link } from "react-router-dom";
 
@@ -17,8 +17,11 @@ const HeaderContainer = styled.div`
 
 const LogoContainer = styled.div`
   height: 40px;
-  width: 100px;
+  width: 130px;
   padding: 18px 14px 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const LogoImage = styled.img`
@@ -68,6 +71,9 @@ export function Header({ onSearch }) {
   return (
     <HeaderContainer>
       <LogoContainer>
+        <Link to={"/playlists"}>
+          <FontAwesomeIcon color="#000" icon={faList} />
+        </Link>
         <Link to={"/"}>
           <LogoImage src="./youtube.png" alt="icon" />
         </Link>

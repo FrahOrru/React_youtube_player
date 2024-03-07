@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { UserProfileCircle } from "./user_profile_circle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 const CardContainer = styled.div`
   max-width: 400px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   position: relative;
 `;
@@ -64,7 +67,32 @@ const DetailsTextContainer = styled.div`
   gap: 0.5rem;
 `;
 
-export function VideoCard({ video, onClick }) {
+const ButtonPlaylist = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #000;
+  color: #fff;
+  border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+
+  &:hover {
+    background: #373434;
+  }
+`;
+const ButtonPlaylistText = styled.p`
+  margin: 0;
+`;
+
+export function VideoCard({ video }) {
+  const [modalState, setModalState] = useState(false);
+  const handleAddToPlaylist = () => {};
+
   return (
     <CardContainer>
       <Link to={"/video/" + video.id.videoId}>
@@ -90,6 +118,10 @@ export function VideoCard({ video, onClick }) {
           </DetailsTextContainer>
         </VideoDetailContainer>
       </Link>
+      <ButtonPlaylist onClick={handleAddToPlaylist}>
+        <ButtonPlaylistText>Add to playlist</ButtonPlaylistText>
+        <FontAwesomeIcon icon={faSquarePlus}></FontAwesomeIcon>
+      </ButtonPlaylist>
     </CardContainer>
   );
 }

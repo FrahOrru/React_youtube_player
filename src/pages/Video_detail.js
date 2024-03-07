@@ -123,7 +123,7 @@ export function VideoDetail() {
                     ></SmallVideoImage>
                     <VideoTextContainer>
                       <div>
-                        <VideoTitle>{video?.channelName}</VideoTitle>
+                        <VideoTitle>{video?.title}</VideoTitle>
                         <VideoChannelDetails>
                           {video?.channelName}
                         </VideoChannelDetails>

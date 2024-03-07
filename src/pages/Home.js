@@ -32,7 +32,6 @@ export function Home() {
 
   useEffect(() => {
     setVideoList(getVideosResults());
-    console.log(videoList);
   }, [handleSearch, handleSearchWithoutText]);
 
   useEffect(() => {
