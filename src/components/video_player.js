@@ -2,7 +2,7 @@ import React from "react";
 import YouTube from "react-youtube";
 import { useParams } from "react-router-dom";
 
-export function VideoPlayer() {
+export function VideoPlayer({ videoIdOutside, onEnd }) {
   const { videoId } = useParams();
 
   const opts = {
@@ -13,5 +13,11 @@ export function VideoPlayer() {
     },
   };
 
-  return <YouTube videoId={videoId} opts={opts} />;
+  return (
+    <YouTube
+      videoId={videoId ? videoId : videoIdOutside}
+      opts={opts}
+      onEnd={onEnd}
+    />
+  );
 }

@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useVideoContext } from "../context/video";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { VideoImage } from "../components/vdeo_card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faCopy, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { VideoPlayer } from "../components/video_player";
 
 const PlaylistContainer = styled.div`
   margin: 0 2rem;
@@ -84,7 +85,8 @@ const IconContainer = styled.div`
 export default function PlaylistDetail() {
   const { playlistId } = useParams();
   const navigate = useNavigate();
-
+  const [playVideo, setPlayVideo] = useState();
+  const [currentVideoPlaying, setCurrentVideoPlaying] = useState();
   const {
     getPlaylistById,
     currentPlaylist,
@@ -112,8 +114,32 @@ export default function PlaylistDetail() {
     document.body.removeChild(tempInput);
   };
 
+  const handleVideoEnd = () => {
+    const currentIndex = currentPlaylist.videos.findIndex(
+      (video) => video.id === currentVideoPlaying.id
+    );
+
+    if (
+      currentIndex !== -1 &&
+      currentIndex + 1 < currentPlaylist.videos.length
+    ) {
+      const nextVideo = currentPlaylist.videos[currentIndex + 1];
+      setCurrentVideoPlaying(nextVideo);
+    } else {
+      setPlayVideo(false);
+    }
+  };
+
   return (
     <PlaylistContainer>
+      {playVideo && (
+        <div>
+          <VideoPlayer
+            videoIdOutside={currentVideoPlaying.id}
+            onEnd={handleVideoEnd}
+          ></VideoPlayer>
+        </div>
+      )}
       <PlaylistHeader>
         <PlaylistTitle>{currentPlaylist?.name}</PlaylistTitle>
         <IconContainer>
@@ -140,7 +166,10 @@ export default function PlaylistDetail() {
                 />
               </IconContainer>
               <VideoImageContainerSmall
-                onClick={() => navigate("/video/" + video.id)}
+                onClick={() => {
+                  setCurrentVideoPlaying(video);
+                  setPlayVideo(true);
+                }}
               >
                 <VideoImage
                   src={video?.snippet?.thumbnails?.url}
@@ -148,7 +177,10 @@ export default function PlaylistDetail() {
                 />
               </VideoImageContainerSmall>
               <VideoDetailTitleSmall
-                onClick={() => navigate("/video/" + video.id)}
+                onClick={() => {
+                  setCurrentVideoPlaying(video);
+                  setPlayVideo(true);
+                }}
               >
                 {video.title}
               </VideoDetailTitleSmall>

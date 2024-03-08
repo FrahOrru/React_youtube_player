@@ -45,6 +45,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/playlists" element={<Playlist />} />
           <Route path="/playlists/:playlistId" element={<PlaylistDetail />} />
+          <Route
+            path="/playlists/video/:videoId"
+            element={<VideoDetail from={"playlist"} />}
+          />
           <Route path="/video/:videoId" element={<VideoDetail />} />
         </Routes>
       </Router>
