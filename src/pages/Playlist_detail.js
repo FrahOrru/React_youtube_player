@@ -1,10 +1,10 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useVideoContext } from "../context/video";
 import { useEffect } from "react";
 import { VideoImage } from "../components/vdeo_card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faCopy, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const PlaylistContainer = styled.div`
   margin: 0 2rem;
@@ -74,8 +74,12 @@ const VideoDetailTitleSmall = styled.p`
   font-size: 12px !important;
   cursor: pointer;
 `;
-const IconContainer = styled.a`
+const IconContainer = styled.div`
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 20px;
 `;
 export default function PlaylistDetail() {
   const { playlistId } = useParams();
@@ -88,15 +92,33 @@ export default function PlaylistDetail() {
     removePlaylist,
   } = useVideoContext();
 
+  const copyUrl = () => {};
+
   useEffect(() => {
     getPlaylistById(playlistId);
   }, []);
+
+  const copyToClipboard = () => {
+    const tempInput = document.createElement("input");
+    tempInput.value = window.location.href;
+
+    document.body.appendChild(tempInput);
+
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+
+    document.body.removeChild(tempInput);
+  };
 
   return (
     <PlaylistContainer>
       <PlaylistHeader>
         <PlaylistTitle>{currentPlaylist?.name}</PlaylistTitle>
         <IconContainer>
+          <FontAwesomeIcon icon={faCopy} onClick={() => copyToClipboard()} />
+
           <FontAwesomeIcon
             icon={faTrash}
             color="#CD201F"
