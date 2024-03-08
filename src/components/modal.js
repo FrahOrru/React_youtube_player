@@ -70,8 +70,29 @@ const PlaylistListElement = styled.div`
   }
 `;
 
+const PlaylistInput = styled.input`
+  font: inherit;
+  letter-spacing: inherit;
+  color: currentcolor;
+  padding: 4px 0px 5px;
+  border: 0px;
+  box-sizing: content-box;
+  background: none;
+  height: 1.4375em;
+  margin: 0px;
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+  min-width: 0px;
+  width: 100%;
+  animation-name: mui-auto-fill-cancel;
+  animation-duration: 10ms;
+  &:focus {
+    border: 0px;
+    outline: 0px;
+  }
+`;
 export function Modal({ video, handleClose, show }) {
-  const { playlists, createPlaylist, addToPlaylist } = useVideoContext();
+  const { playlists, createPlaylistCall, addToPlaylist } = useVideoContext();
 
   const [createAPlaylist, setCreateAPlaylist] = useState(false);
   const [inputValue, setInputValue] = useState();
@@ -81,7 +102,7 @@ export function Modal({ video, handleClose, show }) {
   };
 
   const handleCreatePlaylist = () => {
-    createPlaylist(inputValue);
+    createPlaylistCall(inputValue);
     setCreateAPlaylist(false);
     setInputValue("");
   };
@@ -104,7 +125,7 @@ export function Modal({ video, handleClose, show }) {
           <PlaylistListContainer>
             {createAPlaylist && (
               <div>
-                <input
+                <PlaylistInput
                   name="search"
                   placeholder="Enter a name"
                   value={inputValue}

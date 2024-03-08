@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useVideoContext } from "../context/video";
 import styled from "styled-components";
 
@@ -106,12 +107,14 @@ export default function Playlist() {
         {playlists &&
           playlists.map((playlist) => {
             return (
-              <PlaylistsElement
-                key={playlist.id}
-                backgroundImage={getRandomBackground()}
-              >
-                <PlaylistText>{playlist.name}</PlaylistText>
-              </PlaylistsElement>
+              <Link to={"./" + playlist.id}>
+                <PlaylistsElement
+                  key={playlist.id}
+                  backgroundImage={getRandomBackground()}
+                >
+                  <PlaylistText>{playlist.name}</PlaylistText>
+                </PlaylistsElement>
+              </Link>
             );
           })}
       </PlaylistsContainer>
