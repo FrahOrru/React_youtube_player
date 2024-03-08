@@ -87,7 +87,6 @@ export function VideoDetail() {
 
   useEffect(() => {
     setVideoList(getVideosResults());
-    console.log(videoList);
   }, [handleSearch]);
 
   if (error) return <p>ERROOOORE</p>;

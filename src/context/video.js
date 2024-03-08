@@ -22,7 +22,6 @@ export const VideoProvider = ({ children }) => {
       setLoading(false);
       setError(null);
       setSearchResults(response.data);
-      console.log(response.data);
     } catch (error) {
       setLoading(false);
       setError("Error searching videos");
@@ -38,7 +37,6 @@ export const VideoProvider = ({ children }) => {
       setLoading(false);
       setError(null);
       setSearchResults(response.data);
-      console.log(response.data);
     } catch (error) {
       setLoading(false);
       setError("Error searching videos");
@@ -63,11 +61,15 @@ export const VideoProvider = ({ children }) => {
   const createPlaylist = (name) => {
     setPlaylists([
       ...playlists,
-      { id: playlists.length - 1, name: name, video: [] },
+      { id: playlists.length, name: name, video: [] },
     ]);
   };
 
-  const addToPlaylist = ({ id, video }) => {
+  const getPlaylists = () => {
+    return playlists;
+  };
+
+  const addToPlaylist = (id, video) => {
     if (playlists.find((x) => x.id === id)) {
       setPlaylists([
         ...playlists.filter((x) => x.id !== id),
@@ -92,7 +94,6 @@ export const VideoProvider = ({ children }) => {
   };
 
   const getVideosResults = () => {
-    console.log();
     return searchResults;
   };
 
@@ -107,10 +108,10 @@ export const VideoProvider = ({ children }) => {
         getVideosResults,
         searchVideoWithoutText,
 
-        playlists,
         createPlaylist,
         addToPlaylist,
         removeFromPlaylist,
+        getPlaylists,
       }}
     >
       {children}

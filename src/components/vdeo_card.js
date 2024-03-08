@@ -4,6 +4,7 @@ import { UserProfileCircle } from "./user_profile_circle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { Modal } from "./modal";
 const CardContainer = styled.div`
   max-width: 400px;
   height: 100%;
@@ -16,7 +17,7 @@ const CardContainer = styled.div`
 const VideoImageContainer = styled.div`
   width: 100%;
 `;
-const VideoTitle = styled.p`
+export const VideoTitle = styled.p`
   color: #000;
   font-family: "Roboto", "Arial", sans-serif;
   font-size: 16px;
@@ -38,36 +39,36 @@ export const VideoChannelDetails = styled(VideoTitle)`
   font-size: 12px;
   margin: 0;
 `;
-const VideoChannelDetailsWithDot = styled(VideoChannelDetails)`
+export const VideoChannelDetailsWithDot = styled(VideoChannelDetails)`
   &:before {
     content: "•";
     margin: 0 4px;
   }
 `;
 
-const VideoImage = styled.img`
+export const VideoImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 8px;
 `;
-const VideoDetailContainer = styled.div`
+export const VideoDetailContainer = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 `;
-const FlexAlignedCenterStart = styled.div`
+export const FlexAlignedCenterStart = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: ;
 `;
-const DetailsTextContainer = styled.div`
+export const DetailsTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 `;
 
-const ButtonPlaylist = styled.div`
+export const ButtonPlaylist = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -85,16 +86,24 @@ const ButtonPlaylist = styled.div`
     background: #373434;
   }
 `;
-const ButtonPlaylistText = styled.p`
+export const ButtonPlaylistText = styled.p`
   margin: 0;
 `;
 
 export function VideoCard({ video }) {
-  const [modalState, setModalState] = useState(false);
-  const handleAddToPlaylist = () => {};
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAddToPlaylist = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <CardContainer>
+      <Modal show={showModal} handleClose={handleCloseModal}></Modal>
       <Link to={"/video/" + video.id.videoId}>
         <VideoImageContainer>
           <VideoImage
