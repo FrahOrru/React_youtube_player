@@ -52,21 +52,32 @@ const AddButton = styled.div`
   }
 `;
 
-const PlaylistListContainer = styled.div``;
+const PlaylistListContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const PlaylistListElement = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export function Modal({ video, handleClose, show }) {
-  const { getPlaylists, createPlaylist, addToPlaylist, removeFromPlaylist } =
-    useVideoContext();
+  const { playlists, createPlaylist, addToPlaylist } = useVideoContext();
 
   const [createAPlaylist, setCreateAPlaylist] = useState(false);
   const [inputValue, setInputValue] = useState();
-  const [playlists, setPlaylists] = useState([]);
 
   const changeToCreatePlaylist = () => {
     setCreateAPlaylist(true);
-  };
-
-  const handleGetPlaylists = () => {
-    setPlaylists(getPlaylists());
   };
 
   const handleCreatePlaylist = () => {
@@ -77,18 +88,11 @@ export function Modal({ video, handleClose, show }) {
 
   const handleAddToPlaylist = (playlist) => {
     addToPlaylist(playlist.id, video);
+    handleClose();
   };
-
-  const handleRemoveToPlaylist = () => {
-    removeFromPlaylist(video);
-  };
-
-  useEffect(() => {
-    handleGetPlaylists();
-  }, [handleCreatePlaylist]);
 
   return (
-    <VideoProvider>
+    <>
       <ModalS style={{ display: show ? "flex" : "none" }}>
         <ModalContainer className="modal-main">
           <ModalHeader>
@@ -116,9 +120,11 @@ export function Modal({ video, handleClose, show }) {
               playlists.length > 0 &&
               playlists?.map((playlist) => {
                 return (
-                  <div onClick={() => handleAddToPlaylist(playlist)}>
+                  <PlaylistListElement
+                    onClick={() => handleAddToPlaylist(playlist)}
+                  >
                     {playlist.name}
-                  </div>
+                  </PlaylistListElement>
                 );
               })}
           </PlaylistListContainer>
@@ -130,6 +136,6 @@ export function Modal({ video, handleClose, show }) {
           )}
         </ModalContainer>
       </ModalS>
-    </VideoProvider>
+    </>
   );
 }

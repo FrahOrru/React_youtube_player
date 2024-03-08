@@ -58,42 +58,26 @@ export function VideoDetail() {
   const { videoId } = useParams();
 
   const {
-    searchVideos,
+    searchResults,
     error,
     getVideoDetails,
     currentVideo,
     searchVideoWithoutText,
-    getVideosResults,
   } = useVideoContext();
-
-  const [videoList, setVideoList] = useState();
 
   useEffect(() => {
     getVideoDetails(videoId);
     handleSearchWithoutText();
   }, [videoId]);
 
-  const handleSearch = (searchText) => {
-    if (searchText !== "") {
-      searchVideos(searchText);
-    } else {
-      handleSearchWithoutText();
-    }
-  };
-
   const handleSearchWithoutText = () => {
     searchVideoWithoutText();
   };
-
-  useEffect(() => {
-    setVideoList(getVideosResults());
-  }, [handleSearch]);
 
   if (error) return <p>ERROOOORE</p>;
 
   return (
     <div>
-      <Header onSearch={handleSearch} />
       <DetailContainer>
         <VideoContainer>
           <VideoPlayer />
@@ -111,7 +95,7 @@ export function VideoDetail() {
           </VideoDetailsContainer>
         </VideoContainer>
         <VideoListContainer>
-          {videoList?.map((video) => {
+          {searchResults?.map((video) => {
             return (
               <div key={video.id.videoId}>
                 <Link to={"../../video/" + video.id.videoId}>

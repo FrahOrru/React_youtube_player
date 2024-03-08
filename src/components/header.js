@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SearchBar } from "./search_bar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faList } from "@fortawesome/free-solid-svg-icons";
 import { UserProfileCircle } from "./user_profile_circle";
 import { Link } from "react-router-dom";
+import { useVideoContext } from "../context/video";
 
 const HeaderContainer = styled.div`
   height: 56px;
@@ -63,10 +64,24 @@ export const IconsWrapper = styled.div`
   gap: 1rem;
 `;
 
-export function Header({ onSearch }) {
-  const handleSearch = (text) => {
-    onSearch(text);
+export function Header() {
+  const { searchVideos, searchVideoWithoutText } = useVideoContext();
+
+  const handleSearch = (searchText) => {
+    if (searchText !== "") {
+      searchVideos(searchText);
+    } else {
+      handleSearchWithoutText();
+    }
   };
+
+  const handleSearchWithoutText = () => {
+    searchVideoWithoutText();
+  };
+
+  useEffect(() => {
+    handleSearchWithoutText();
+  }, []);
 
   return (
     <HeaderContainer>

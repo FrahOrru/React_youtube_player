@@ -70,12 +70,14 @@ export const VideoProvider = ({ children }) => {
   };
 
   const addToPlaylist = (id, video) => {
+    console.log(playlists.find((x) => x.id === id));
+    const playlistVdeos = playlists.find((x) => x.id === id).video;
     if (playlists.find((x) => x.id === id)) {
       setPlaylists([
         ...playlists.filter((x) => x.id !== id),
         {
           ...playlists.find((x) => x.id === id),
-          video: playlists.find((x) => x.id === id).video.push(video),
+          video: [...playlistVdeos, video],
         },
       ]);
     }
@@ -92,26 +94,21 @@ export const VideoProvider = ({ children }) => {
       },
     ]);
   };
-
-  const getVideosResults = () => {
-    return searchResults;
-  };
-
   return (
     <VideoContext.Provider
       value={{
         currentVideo,
+        searchResults,
+        playlists,
         loading,
         error,
         searchVideos,
         getVideoDetails,
-        getVideosResults,
         searchVideoWithoutText,
 
         createPlaylist,
         addToPlaylist,
         removeFromPlaylist,
-        getPlaylists,
       }}
     >
       {children}

@@ -14,38 +14,15 @@ const VideosContainer = styled.div`
 `;
 
 export function Home() {
-  const { searchVideos, getVideosResults, error, searchVideoWithoutText } =
-    useVideoContext();
-  const [videoList, setVideoList] = useState();
-
-  const handleSearch = (searchText) => {
-    if (searchText !== "") {
-      searchVideos(searchText);
-    } else {
-      handleSearchWithoutText();
-    }
-  };
-
-  const handleSearchWithoutText = () => {
-    searchVideoWithoutText();
-  };
-
-  useEffect(() => {
-    setVideoList(getVideosResults());
-  }, [handleSearch, handleSearchWithoutText]);
-
-  useEffect(() => {
-    handleSearchWithoutText();
-  }, []);
+  const { searchResults, error } = useVideoContext();
 
   if (error) return <p>Error</p>;
 
   return (
     <div>
-      <Header onSearch={handleSearch} />
       <VideosContainer>
-        {videoList &&
-          videoList?.map((video) => {
+        {searchResults &&
+          searchResults?.map((video) => {
             return <VideoCard key={video.id.videoId} video={video}></VideoCard>;
           })}
       </VideosContainer>

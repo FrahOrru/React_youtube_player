@@ -103,7 +103,11 @@ export function VideoCard({ video }) {
 
   return (
     <CardContainer>
-      <Modal show={showModal} handleClose={handleCloseModal}></Modal>
+      <Modal
+        video={video}
+        show={showModal}
+        handleClose={handleCloseModal}
+      ></Modal>
       <Link to={"/video/" + video.id.videoId}>
         <VideoImageContainer>
           <VideoImage
